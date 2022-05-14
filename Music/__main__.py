@@ -59,14 +59,7 @@ async def load_start():
             print("Error came while clearing db")
             pass     
     await app.send_message(LOG_GROUP_ID, "Bot Started")
-    print("[INFO]: STARTED BOT AND SENDING THE INFO TO SERVER")
-    if AUTO_LEAVE:
-        print("[ INFO ] STARTING SCHEDULER")
-        scheduler.configure(timezone=pytz.utc)
-        scheduler.add_job(
-            leave_from_inactive_call, "interval", seconds=AUTO_LEAVE
-        )
-        scheduler.start()    
+    print("[INFO]: STARTED BOT")
     
    
 loop = asyncio.get_event_loop()
