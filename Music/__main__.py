@@ -56,9 +56,7 @@ async def load_start():
     await startapp()
     await app.send_message(LOG_GROUP_ID, "Bot Started")
     await client.send_message(LOG_GROUP_ID, "Assistant Started")     
-    print("[INFO]: STARTED")
-    
-   
+    print("[INFO]: STARTED")   
 loop = asyncio.get_event_loop()
 loop.run_until_complete(load_start())
 
