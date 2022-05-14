@@ -59,7 +59,7 @@ async def load_start():
             print("Error came while clearing db")
             pass     
     await app.send_message(LOG_GROUP_ID, "Bot Started")
-    print("[INFO]: STARTED BOT")
+    print("[INFO]: STARTED")
     
    
 loop = asyncio.get_event_loop()
