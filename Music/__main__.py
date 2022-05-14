@@ -27,7 +27,6 @@ print(f"[INFO]: BOT STARTED AS {BOT_NAME}!")
 print(f"[INFO]: ASSISTANT STARTED AS {ASSNAME}!")
 
 
-
 async def load_start():
     restart_data = await clean_restart_stage()
     if restart_data:
