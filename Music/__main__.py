@@ -1,5 +1,3 @@
-import time
-import pytz
 import asyncio
 import time
 import uvloop
@@ -14,6 +12,8 @@ from Music.MusicUtilities.tgcallsrun import run
 from Music.MusicUtilities.helpers.decorators import nothingmuch as startapp
 from pytgcalls import idle
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
+import time
+
 
 Client(
     ':Music:',
