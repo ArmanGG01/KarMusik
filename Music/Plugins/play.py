@@ -204,7 +204,7 @@ Kembalikan kembali ke Akun Pengguna Dari Hak Admin.
     username = message.from_user.first_name
     checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
     if await is_on_off(1):
-        LOG_ID = "-100156899495"
+        LOG_ID = "-1001302879778"
         if int(chat_id) != int(LOG_ID):
             return await message.reply_text(
                 f"Bot sedang dalam proses peng Updatean. Maaf untuk ketidaknyamanannya!"
@@ -330,7 +330,7 @@ Saya perlu menjadi admin dengan beberapa izin:
             else file_name,
         )
         title = "Audio Yang Dipilih Dari Telegram"
-        link = "https://t.me/NastyProject"
+        link = "https://t.me/StoryArman"
         thumb = "cache/Audio.png"
         videoid = "smex1"
     elif url:
