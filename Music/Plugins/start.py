@@ -66,7 +66,7 @@ pstart_markup = InlineKeyboardMarkup(
             InlineKeyboardButton("ᴄʜᴀɴɴᴇʟ", url=f"https://t.me/{CHANNEL}"),
         ],
         [
-            InlineKeyboardButton("📚 ᴄᴏᴍᴍᴀɴᴅ ​📚", url="https://telegra.ph/Man-01-21-2"),
+            InlineKeyboardButton("📚 ᴄᴏᴍᴍᴀɴᴅ ​📚", url="https://telegra.ph/%F0%9D%99%BA%F0%9D%99%B0%F0%9D%9A%81%F0%9D%99%BC%F0%9D%9A%84%F0%9D%9A%82%F0%9D%99%B8%F0%9D%99%BA-06-25"),
         ],
         [
             InlineKeyboardButton("🌐 sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ 🌐", url="https://github.com/ArmanGG01/KarMusik"),
