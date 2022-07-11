@@ -330,7 +330,7 @@ Saya perlu menjadi admin dengan beberapa izin:
             else file_name,
         )
         title = "Audio Yang Dipilih Dari Telegram"
-        link = "https://t.me/StoryArman"
+        link = "https://t.me/Karc0de"
         thumb = "cache/Audio.png"
         videoid = "smex1"
     elif url:
