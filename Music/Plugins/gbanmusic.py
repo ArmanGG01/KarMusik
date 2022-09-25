@@ -40,7 +40,6 @@ async def ban_globally(_, message):
             m = await message.reply_text(
                 f"""
 **Menginisialisasi Larangan Global pada {user.mention}**
-
 Waktu yang diharapkan: {len(served_chats)}
 """
             )
@@ -95,7 +94,6 @@ __**Larangan Global Baru pada Musik**__
             m = await message.reply_text(
                 f"""
 **Menginisialisasi Larangan Global pada {mention}**
-
 Waktu yang diharapkan: {len(served_chats)}
 """
             )
@@ -192,7 +190,6 @@ async def chat_watcher_func(_, message):
         await message.reply_text(
             f"""
 {checking} secara global dilarang oleh Musik dan telah dikeluarkan dari obrolan.
-
 **Kemungkinan Alasan:** Potensi Spammer dan Penyalahguna.
 """
         )
