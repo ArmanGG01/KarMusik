@@ -1,4 +1,4 @@
-import asynci
+import asyncio
 from Music import app, OWNER
 from pyrogram import filters, Client
 from pyrogram.types import Message
