@@ -31,6 +31,6 @@ jobs:
           commit_message: 'PyLint Auto Fixes'
           commit_options: '--no-verify'
           repository: .
-          commit_user_name: ArmanGG01
+          commit_user_name: Hunter-XD
           commit_user_email: 85411336+Hunter-XD@users.noreply.github.com
-          commit_author: ArmanGG01 <85411336+Hunter-XD@users.noreply.github.com>
+          commit_author: Hunter-XD <85411336+Hunter-XD@users.noreply.github.com>
