@@ -19,6 +19,8 @@ from Music.MusicUtilities.helpers.autoleave import leave_from_inactive_call
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 
+scheduler = AsyncIOScheduler()
+
 Client(
     ':Music:',
     API_ID,
@@ -30,6 +32,7 @@ Client(
 
 print(f"[INFO]: BOT STARTED AS {BOT_NAME}!")
 print(f"[INFO]: ASSISTANT STARTED AS {ASSNAME}!")
+
 
 
 async def load_start():
@@ -56,14 +59,17 @@ async def load_start():
             await remove_active_chat(served_chat)                                         
         except Exception as e:
             print("Error came while clearing db")
-            pass
-    await startapp()
+            pass     
     await app.send_message(LOG_GROUP_ID, "Bot Started")
-    await client.send_message(LOG_GROUP_ID, "Assistant Started") 
-    await client.join_chat("obrolansuar")
-    await client.join_chat("Karc0de")    
-    print("[INFO]: STARTED")
-
+    print("[INFO]: STARTED BOT AND SENDING THE INFO TO SERVER")
+    if AUTO_LEAVE:
+        print("[ INFO ] STARTING SCHEDULER")
+        scheduler.configure(timezone=pytz.utc)
+        scheduler.add_job(
+            leave_from_inactive_call, "interval", seconds=AUTO_LEAVE
+        )
+        scheduler.start()    
+    
    
 loop = asyncio.get_event_loop()
 loop.run_until_complete(load_start())
