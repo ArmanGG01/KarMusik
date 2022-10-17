@@ -1,4 +1,4 @@
-<h2 align="centre">Kar Music Player</h2>
+<h2 align="centre">Kar Musik Player</h2>
 
 <p align="center">
   <img src="https://telegra.ph/file/5e6bf2962ce5004f141cc.jpg">
