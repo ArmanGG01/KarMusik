@@ -20,7 +20,7 @@ GROUP = getenv("GROUP", None)
 CHANNEL = getenv("CHANNEL", None)
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/ArmanGG01/KarMusik")
-AUTO_LEAVE = int(getenv("AUTO_LEAVE", "120"))
+AUTO_LEAVE = int(getenv("AUTO_LEAVE", "600"))
 HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 
