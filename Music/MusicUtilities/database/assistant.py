@@ -2,7 +2,6 @@ from typing import Dict, Union, List
 from Music import db
 
 assisdb = db.assis
-assistants = []
 
 async def get_assistant_count() -> dict:
     chats = assisdb.find({"chat_id": {"$lt": 0}})
