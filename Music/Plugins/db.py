@@ -59,7 +59,7 @@ async def broadcast_message_pin(_, message):
 
 
 @app.on_message(filters.command("broadcast") & filters.user(OWNER))
-async def broadcast_message_nopin(_, message):
+async def broadcast(_, message):
     if not message.reply_to_message:
         pass
     else:
