@@ -10,10 +10,8 @@ from pyrogram.types import Message
 @app.on_message(filters.command("speedtest") & ~filters.edited)
 async def gstats(_, message):
     userid = message.from_user.id
-    if await is_on_off(2):
-        if userid in SUDOERS:
-            pass
-        else:
+    if userid not in SUDOERS:
+        if await is_on_off(2):
             return
     m = await message.reply_text("__Running KarSpeedTest From Server__")
     try:
@@ -27,7 +25,7 @@ async def gstats(_, message):
         result = test.results.dict()
     except Exception as e:
         await message.err(text=e)
-        return 
+        return
     m = await m.edit("📲 Hasil SpeedTest")
     path = wget.download(result["share"])
     output = f"""**📜 Berbagi Hasil SpeedTest**

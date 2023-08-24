@@ -82,7 +82,7 @@ async def isPreviewUp(preview: str) -> bool:
         if status == 404 or (status == 200 and size == 0):
             await asyncio.sleep(0.4)
         else:
-            return True if status == 200 else False
+            return status == 200
     return False
 
 
@@ -130,16 +130,16 @@ async def pausevc(_, CallbackQuery):
             await CallbackQuery.answer("Voicechat Paused", show_alert=True)
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
-            rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+            rpk = f"[{user_name}](tg://user?id={str(user_id)})"
             await CallbackQuery.message.reply(
                 f"🎧 Lagu Dijeda oleh {rpk}!", reply_markup=play_keyboard
             )
             await CallbackQuery.message.delete()
         else:
-            await CallbackQuery.answer(f"Tidak ada yang diputar!", show_alert=True)
+            await CallbackQuery.answer("Tidak ada yang diputar!", show_alert=True)
             return
     else:
-        await CallbackQuery.answer(f"Tidak ada yang diputar di Musik!", show_alert=True)
+        await CallbackQuery.answer("Tidak ada yang diputar di Musik!", show_alert=True)
 
 
 @Client.on_callback_query(filters.regex("resumevc"))
@@ -171,13 +171,13 @@ Anda tidak memiliki izin yang diperlukan untuk melakukan tindakan ini.
             await CallbackQuery.answer("Dilanjutkan", show_alert=True)
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
-            rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+            rpk = f"[{user_name}](tg://user?id={str(user_id)})"
             await CallbackQuery.message.reply(
                 f"🎧 Lagu Dilanjutkan oleh {rpk}!", reply_markup=play_keyboard
             )
             await CallbackQuery.message.delete()
     else:
-        await CallbackQuery.answer(f"Tidak ada yang diputar!", show_alert=True)
+        await CallbackQuery.answer("Tidak ada yang diputar!", show_alert=True)
 
 
 @Client.on_callback_query(filters.regex("skipvc"))
@@ -203,7 +203,7 @@ Anda tidak memiliki izin yang diperlukan untuk melakukan tindakan ini
             user_id = CallbackQuery.from_user.id
             await remove_active_chat(chat_id)
             user_name = CallbackQuery.from_user.first_name
-            rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+            rpk = f"[{user_name}](tg://user?id={str(user_id)})"
             await remove_active_chat(chat_id)
             await CallbackQuery.answer()
             await CallbackQuery.message.reply(
@@ -248,54 +248,53 @@ Gagal mengunduh video ini.
                 videoid = afk
 
                 def my_hook(d):
-                    if d["status"] == "downloading":
-                        percentage = d["_percent_str"]
-                        per = (str(percentage)).replace(".", "", 1).replace("%", "", 1)
-                        per = int(per)
-                        eta = d["eta"]
-                        speed = d["_speed_str"]
-                        size = d["_total_bytes_str"]
-                        bytesx = d["total_bytes"]
-                        if str(bytesx) in flex:
-                            pass
-                        else:
-                            flex[str(bytesx)] = 1
-                        if flex[str(bytesx)] == 1:
+                    if d["status"] != "downloading":
+                        return
+                    percentage = d["_percent_str"]
+                    per = (str(percentage)).replace(".", "", 1).replace("%", "", 1)
+                    per = int(per)
+                    eta = d["eta"]
+                    speed = d["_speed_str"]
+                    size = d["_total_bytes_str"]
+                    bytesx = d["total_bytes"]
+                    if str(bytesx) not in flex:
+                        flex[str(bytesx)] = 1
+                    if flex[str(bytesx)] == 1:
+                        flex[str(bytesx)] += 1
+                        sedtime.sleep(1)
+                        mystic.edit(
+                            f"Downloading {title[:50]}\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
+                        )
+                    if per > 500:
+                        if flex[str(bytesx)] == 2:
                             flex[str(bytesx)] += 1
-                            sedtime.sleep(1)
+                            sedtime.sleep(0.5)
                             mystic.edit(
-                                f"Downloading {title[:50]}\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
+                                f"Downloading {title[:50]}...\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
                             )
-                        if per > 500:
-                            if flex[str(bytesx)] == 2:
-                                flex[str(bytesx)] += 1
-                                sedtime.sleep(0.5)
-                                mystic.edit(
-                                    f"Downloading {title[:50]}...\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
-                                )
-                                print(
-                                    f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds"
-                                )
-                        if per > 800:
-                            if flex[str(bytesx)] == 3:
-                                flex[str(bytesx)] += 1
-                                sedtime.sleep(0.5)
-                                mystic.edit(
-                                    f"Downloading {title[:50]}....\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
-                                )
-                                print(
-                                    f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds"
-                                )
-                        if per == 1000:
-                            if flex[str(bytesx)] == 4:
-                                flex[str(bytesx)] = 1
-                                sedtime.sleep(0.5)
-                                mystic.edit(
-                                    f"Downloading {title[:50]}.....\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
-                                )
-                                print(
-                                    f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds"
-                                )
+                            print(
+                                f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds"
+                            )
+                    if per > 800:
+                        if flex[str(bytesx)] == 3:
+                            flex[str(bytesx)] += 1
+                            sedtime.sleep(0.5)
+                            mystic.edit(
+                                f"Downloading {title[:50]}....\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
+                            )
+                            print(
+                                f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds"
+                            )
+                    if per == 1000:
+                        if flex[str(bytesx)] == 4:
+                            flex[str(bytesx)] = 1
+                            sedtime.sleep(0.5)
+                            mystic.edit(
+                                f"Downloading {title[:50]}.....\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec"
+                            )
+                            print(
+                                f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds"
+                            )
 
                 loop = asyncio.get_event_loop()
                 xx = await loop.run_in_executor(None, download, url, my_hook)
@@ -323,7 +322,7 @@ Gagal mengunduh video ini.
                 semx = await app.get_users(userid)
                 user_id = CallbackQuery.from_user.id
                 user_name = CallbackQuery.from_user.first_name
-                rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+                rpk = f"[{user_name}](tg://user?id={str(user_id)})"
                 await CallbackQuery.message.reply_photo(
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),
@@ -369,7 +368,7 @@ Gagal mengunduh video ini.
                     buttons = play_markup(videoid, user_id)
                 user_id = CallbackQuery.from_user.id
                 user_name = CallbackQuery.from_user.first_name
-                rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+                rpk = f"[{user_name}](tg://user?id={str(user_id)})"
                 await CallbackQuery.message.reply_photo(
                     photo=f"downloads/{_chat_}final.png",
                     reply_markup=InlineKeyboardMarkup(buttons),
@@ -409,10 +408,10 @@ async def stopvc(_, CallbackQuery):
         await CallbackQuery.answer("Dihentikan", show_alert=True)
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
-        rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+        rpk = f"[{user_name}](tg://user?id={str(user_id)})"
         await CallbackQuery.message.reply(f"🎧 Lagu Dihentikan oleh {rpk}!")
     else:
-        await CallbackQuery.answer(f"Tidak ada yang diputar!", show_alert=True)
+        await CallbackQuery.answer("Tidak ada yang diputar!", show_alert=True)
 
         
 @Client.on_callback_query(filters.regex("play_playlist"))

@@ -12,11 +12,8 @@ async def authorised(message):
 
 
 async def unauthorised(message: Message):
+    text = f"Anda tidak memiliki izin yang diperlukan untuk melakukan tindakan ini.\nMEMBUTUHKAN ADMIN FULL "
     chatID = message.chat.id
-    text = (
-        "Anda tidak memiliki izin yang diperlukan untuk melakukan tindakan ini."
-        + f"\nMEMBUTUHKAN ADMIN FULL "
-    )
     try:
         await message.reply_text(text)
     except ChatWriteForbidden:

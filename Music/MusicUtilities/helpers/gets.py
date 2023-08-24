@@ -51,9 +51,7 @@ def get_url(message_1: Message) -> Union[str, None]:
                     text = message.text or message.caption
                     offset, length = entity.offset, entity.length
                     break
-    if offset in (None,):
-        return None
-    return text[offset:offset + length]
+    return None if offset in (None,) else text[offset:offset + length]
 random_assistant = ["5", "1", "2", "3", "4"]
 
 themes = ["1", "2", "3", "4", "5", "6"]

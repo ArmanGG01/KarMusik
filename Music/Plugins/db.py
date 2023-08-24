@@ -8,17 +8,13 @@ from ..MusicUtilities.helpers.filters import command
 
 @app.on_message(filters.command("broadcast_pin") & filters.user(OWNER))
 async def broadcast_message_pin(_, message):
-    if not message.reply_to_message:
-        pass
-    else :
-        x = message.reply_to_message.message_id   
+    if message.reply_to_message:
+        x = message.reply_to_message.message_id
         y = message.chat.id
         sent = 0
         pin = 0
-        chats = []
         schats = await get_served_chats()
-        for chat in schats:
-            chats.append(int(chat["chat_id"]))
+        chats = [int(chat["chat_id"]) for chat in schats]
         for i in chats:
             try:
                 m = await app.forward_messages(i, y, x)
@@ -31,18 +27,16 @@ async def broadcast_message_pin(_, message):
                 sent += 1
             except Exception:
                 pass
-        await message.reply_text(f"✅ **Pesan yang disiarkan di {sent} obrolan\n\n📌 dengan {pin} pin.**")  
+        await message.reply_text(f"✅ **Pesan yang disiarkan di {sent} obrolan\n\n📌 dengan {pin} pin.**")
         return
     if len(message.command) < 2:
         await message.reply_text("**Penggunaan**:\n/broadcast (message)")
-        return  
+        return
     text = message.text.split(None, 1)[1]
     sent = 0
     pin = 0
-    chats = []
     schats = await get_served_chats()
-    for chat in schats:
-        chats.append(int(chat["chat_id"]))
+    chats = [int(chat["chat_id"]) for chat in schats]
     for i in chats:
         try:
             m = await app.send_message(i, text=text)
@@ -60,16 +54,12 @@ async def broadcast_message_pin(_, message):
 
 @app.on_message(filters.command("broadcast") & filters.user(OWNER))
 async def broadcast(_, message):
-    if not message.reply_to_message:
-        pass
-    else:
+    if message.reply_to_message:
         x = message.reply_to_message.message_id
         y = message.chat.id
         sent = 0
-        chats = []
         schats = await get_served_chats()
-        for chat in schats:
-            chats.append(int(chat["chat_id"]))
+        chats = [int(chat["chat_id"]) for chat in schats]
         for i in chats:
             try:
                 m = await app.forward_messages(i, y, x)
@@ -86,10 +76,8 @@ async def broadcast(_, message):
         return
     text = message.text.split(None, 1)[1]
     sent = 0
-    chats = []
     schats = await get_served_chats()
-    for chat in schats:
-        chats.append(int(chat["chat_id"]))
+    chats = [int(chat["chat_id"]) for chat in schats]
     for i in chats:
         try:
             m = await app.send_message(i, text=text)

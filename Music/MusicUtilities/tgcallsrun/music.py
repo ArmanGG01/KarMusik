@@ -96,41 +96,41 @@ Downloading....
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
                     return await mystic.edit(f"Failed to download this video.\n\n**Reason**:{e}") 
-                
-                chat_title = ctitle                
+
+                chat_title = ctitle
                 videoid = afk
                 title = (x["title"])
                 def my_hook(d):
-                    if d['status'] == 'downloading':
-                        percentage = d['_percent_str']
-                        per = (str(percentage)).replace(".","", 1).replace("%","", 1)
-                        per = int(per)
-                        eta = d['eta']
-                        speed = d['_speed_str']
-                        size = d['_total_bytes_str']
-                        bytesx = d['total_bytes']
-                        if str(bytesx) in flex:
-                            pass
-                        else:
-                            flex[str(bytesx)] = 1
-                        if flex[str(bytesx)] == 1:
+                    if d['status'] != 'downloading':
+                        return
+                    percentage = d['_percent_str']
+                    per = (str(percentage)).replace(".","", 1).replace("%","", 1)
+                    per = int(per)
+                    eta = d['eta']
+                    speed = d['_speed_str']
+                    size = d['_total_bytes_str']
+                    bytesx = d['total_bytes']
+                    if str(bytesx) not in flex:
+                        flex[str(bytesx)] = 1
+                    if flex[str(bytesx)] == 1:
+                        flex[str(bytesx)] += 1
+                        mystic.edit(f"Downloading {title[:50]}\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
+                    if per > 500:    
+                        if flex[str(bytesx)] == 2:
                             flex[str(bytesx)] += 1
-                            mystic.edit(f"Downloading {title[:50]}\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
-                        if per > 500:    
-                            if flex[str(bytesx)] == 2:
-                                flex[str(bytesx)] += 1
-                                mystic.edit(f"Downloading {title[:50]}...\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
-                                print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
-                        if per > 800:    
-                            if flex[str(bytesx)] == 3:
-                                flex[str(bytesx)] += 1
-                                mystic.edit(f"Downloading {title[:50]}....\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
-                                print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
-                        if per == 1000:    
-                            if flex[str(bytesx)] == 4:
-                                flex[str(bytesx)] = 1
-                                mystic.edit(f"Downloading {title[:50]}.....\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec") 
-                                print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
+                            mystic.edit(f"Downloading {title[:50]}...\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
+                            print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
+                    if per > 800:    
+                        if flex[str(bytesx)] == 3:
+                            flex[str(bytesx)] += 1
+                            mystic.edit(f"Downloading {title[:50]}....\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
+                            print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
+                    if per == 1000:    
+                        if flex[str(bytesx)] == 4:
+                            flex[str(bytesx)] = 1
+                            mystic.edit(f"Downloading {title[:50]}.....\n\n**FileSize:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec") 
+                            print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
+
                 loop = asyncio.get_event_loop()
                 xx = await loop.run_in_executor(None, download, url, my_hook)
                 file = await convert(xx)
@@ -147,7 +147,7 @@ Downloading....
                 duration = round(x["duration"] / 60)
                 theme = random.choice(themes)
                 ctitle = await CHAT_TITLE(ctitle)
-                f2 = open(f'search/{afk}id.txt', 'r')        
+                f2 = open(f'search/{afk}id.txt', 'r')
                 userid =(f2.read())
                 thumb = await gen_thumb(thumbnail, title, userid, theme, ctitle)
                 user_id = userid
@@ -155,11 +155,11 @@ Downloading....
                 buttons = play_markup(videoid, user_id)
                 await mystic.delete()
                 semx = await app.get_users(userid)
-                await app.send_photo(chat_id,
-                photo= thumb,
-                reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"🎥<b>__Started Playing:__ </b>[{title[:25]}]({url}) \n⏳<b>__Duration:__</b> {duration} Mins\n💡<b>__Info:__</b> [Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{videoid})\n👤**__Requested by:__** {semx.mention}")
-            )   
+                    await app.send_photo(chat_id,
+                    photo= thumb,
+                    reply_markup=InlineKeyboardMarkup(buttons),    
+                    caption=(f"🎥<b>__Started Playing:__ </b>[{title[:25]}]({url}) \n⏳<b>__Duration:__</b> {duration} Mins\n💡<b>__Info:__</b> [Get Additional Information](https://t.me/{BOT_USERNAME}?start=info_{videoid})\n👤**__Requested by:__** {semx.mention}")
+                )
                 os.remove(thumb)
             else:      
                 await pytgcalls.change_stream(
@@ -195,7 +195,7 @@ Downloading....
 """,
                 )
                 return
-           
+
     except Exception as e:
         print(e) 
 

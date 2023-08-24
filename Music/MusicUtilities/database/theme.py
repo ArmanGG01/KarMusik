@@ -5,17 +5,12 @@ notesdb = db.notes
 
 async def _get_theme(chat_id: int) -> Dict[str, int]:
     _notes = await notesdb.find_one({"chat_id": chat_id})
-    if not _notes:
-        return {}
-    return _notes["notes"]
+    return {} if not _notes else _notes["notes"]
 
 async def get_theme(chat_id: int, name: str) -> Union[bool, dict]:
     name = name.lower().strip()
     _notes = await _get_theme(chat_id)
-    if name in _notes:
-        return _notes[name]
-    else:
-        return False
+    return _notes[name] if name in _notes else False
 
 
 async def save_theme(chat_id: int, name: str, note: dict):

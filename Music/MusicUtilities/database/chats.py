@@ -5,18 +5,11 @@ chatsdb = db.chats
 
 async def get_served_chats() -> list:
     chats = chatsdb.find({"chat_id": {'$lt': 0}})
-    if not chats:
-        return []
-    chats_list = []
-    for chat in await chats.to_list(length=1000000000):
-        chats_list.append(chat)
-    return chats_list   
+    return [] if not chats else list(await chats.to_list(length=1000000000))   
     
 async def is_served_chat(chat_id: int) -> bool:
     chat = await chatsdb.find_one({"chat_id": chat_id})
-    if not chat:
-        return False
-    return True
+    return bool(chat)
 
 async def add_served_chat(chat_id: int):
     is_served = await is_served_chat(chat_id)
@@ -26,12 +19,7 @@ async def add_served_chat(chat_id: int):
  
 async def get_served_chats() -> list:
     chats = chatsdb.find({"chat_id": {"$lt": 0}})
-    if not chats:
-        return []
-    chats_list = []
-    for chat in await chats.to_list(length=1000000000):
-        chats_list.append(chat)
-    return chats_list
+    return [] if not chats else list(await chats.to_list(length=1000000000))
 
 async def remove_served_chat(chat_id: int):
     is_served = await is_served_chat(chat_id)

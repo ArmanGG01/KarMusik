@@ -10,8 +10,7 @@ def changeImageSize(maxWidth, maxHeight, image):
     heightRatio = maxHeight / image.size[1]
     newWidth = int(widthRatio * image.size[0])
     newHeight = int(heightRatio * image.size[1])
-    newImage = image.resize((newWidth, newHeight))
-    return newImage
+    return image.resize((newWidth, newHeight))
 
 
 async def gen_thumb(thumbnail, title, userid, theme, ctitle):
@@ -51,8 +50,7 @@ async def gen_thumb(thumbnail, title, userid, theme, ctitle):
     img.save(f"search/final{userid}.png")
     os.remove(f"search/temp{userid}.png")
     os.remove(f"search/thumb{userid}.png")
-    final = f"search/final{userid}.png"
-    return final
+    return f"search/final{userid}.png"
 
 
 async def down_thumb(thumbnail, userid):
@@ -62,5 +60,4 @@ async def down_thumb(thumbnail, userid):
                 f = await aiofiles.open(f"search/thumb{userid}.png", mode="wb")
                 await f.write(await resp.read())
                 await f.close()
-    final = f"search/thumb{userid}.png"
-    return final
+    return f"search/thumb{userid}.png"

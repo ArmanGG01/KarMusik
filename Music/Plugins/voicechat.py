@@ -38,17 +38,13 @@ async def activevc(_, message: Message):
         duration_min = db_mem[message.chat.id]["total"]
         got_queue = get_queue.get(message.chat.id)
         if not got_queue:
-            await mystic.edit(f"Nothing in Queue")
-        fetched = []
-        for get in got_queue:
-            fetched.append(get)
-
+            await mystic.edit("Nothing in Queue")
+        fetched = list(got_queue)
         ### Results
         current_playing = fetched[0][0]
         user_name = fetched[0][1]
 
-        msg = "**Queued List**\n\n"
-        msg += "**Currently Playing:**"
+        msg = "**Queued List**\n\n" + "**Currently Playing:**"
         msg += "\n▶️" + current_playing[:30]
         msg += f"\n   ╚By:- {user_name}"
         msg += f"\n   ╚Duration:- Remaining `{dur_left}` out of `{duration_min}` Mins."
@@ -77,7 +73,7 @@ async def activevc(_, message: Message):
         else:
             await mystic.edit(msg)
     else:
-        await message.reply_text(f"Tidak ada dalam Antrian")
+        await message.reply_text("Tidak ada dalam Antrian")
 
 
 @app.on_message(filters.command("activevc") & filters.user(SUDOERS))
@@ -85,8 +81,7 @@ async def activevc(_, message: Message):
     served_chats = []
     try:
         chats = await get_active_chats()
-        for chat in chats:
-            served_chats.append(int(chat["chat_id"]))
+        served_chats.extend(int(chat["chat_id"]) for chat in chats)
     except Exception as e:
         await message.reply_text(f"**Error:-** {e}")
     text = ""

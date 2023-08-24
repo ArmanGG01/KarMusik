@@ -17,7 +17,7 @@ def checker(mystic):
         if await is_on_off(1):
             if int(message.chat.id) != int(LOG_GROUP_ID):
                 return await message.reply_text(
-                    f"Bot is under Maintenance. Sorry for the inconvenience!"
+                    "Bot is under Maintenance. Sorry for the inconvenience!"
                 )
         if await is_gbanned_user(message.from_user.id):
             return await message.reply_text(

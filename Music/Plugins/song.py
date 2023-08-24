@@ -39,8 +39,7 @@ Kembalikan ke Akun Pengguna Dari Hak Admin.
     message.from_user.first_name
     checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
 
-    url = get_url(message)
-    if url:
+    if url := get_url(message):
         query = message.text.split(None, 1)[1]
         mystic = await message.reply_text("Sedang memproses")
         ydl_opts = {"format": "bestaudio/best"}
@@ -128,7 +127,7 @@ Kembalikan ke Akun Pengguna Dari Hak Admin.
             f"**✨ Silahkan Pilih Mana Yang Ingin Didownload**\n\n¹ <b>{title1[:27]}</b>\n  ┗ 💡 <u>__[More Information](https://t.me/{BOT_USERNAME}?start=info_{ID1})__</u>\n  ┗ ⚡ __Powered by {BOT_NAME}__\n\n² <b>{title2[:27]}</b>\n  ┗ 💡 <u>__[More Information](https://t.me/{BOT_USERNAME}?start=info_{ID2})__</u>\n  ┗ ⚡ __Powered by {BOT_NAME}__\n\n³ <b>{title3[:27]}</b>\n  ┗ 💡 <u>__[More Information](https://t.me/{BOT_USERNAME}?start=info_{ID3})__</u>\n  ┗ ⚡ __Powered by {BOT_NAME}__\n\n⁴ <b>{title4[:27]}</b>\n  ┗ 💡 <u>__[More Information](https://t.me/{BOT_USERNAME}?start=info_{ID4})__</u>\n  ┗ ⚡ __Powered by {BOT_NAME}__\n\n⁵ <b>{title5[:27]}</b>\n  ┗ 💡 <u>__[More Information](https://t.me/{BOT_USERNAME}?start=info_{ID5})__</u>\n  ┗ ⚡ __Powered by {BOT_NAME}__",    
             reply_markup=InlineKeyboardMarkup(buttons),
             disable_web_page_preview=True
-        )  
+        )
         return
 
 
@@ -147,7 +146,7 @@ async def startyuplay(_, CallbackQuery):
         )
     if duration == "None":
         return await CallbackQuery.message.reply_text(
-            f"Sorry!, Live Videos are not supported"
+            "Sorry!, Live Videos are not supported"
         )
     if CallbackQuery.from_user.id != int(user_id):
         return await CallbackQuery.answer(
@@ -304,7 +303,7 @@ def search_markup(
     user_id,
     query,
 ):
-    buttons = [
+    return [
         [
             InlineKeyboardButton(
                 text="¹", callback_data=f"beta {ID1}|{duration1}|{user_id}"
@@ -328,13 +327,14 @@ def search_markup(
             InlineKeyboardButton(
                 text="⪻", callback_data=f"chonga 1|{query}|{user_id}"
             ),
-            InlineKeyboardButton(text="✘", callback_data=f"ppcl2 smex|{user_id}"),
+            InlineKeyboardButton(
+                text="✘", callback_data=f"ppcl2 smex|{user_id}"
+            ),
             InlineKeyboardButton(
                 text="⪼", callback_data=f"chonga 1|{query}|{user_id}"
             ),
         ],
     ]
-    return buttons
 
 
 def search_markup2(
@@ -351,7 +351,7 @@ def search_markup2(
     user_id,
     query,
 ):
-    buttons = [
+    return [
         [
             InlineKeyboardButton(
                 text="⁶", callback_data=f"beta {ID6}|{duration6}|{user_id}"
@@ -375,17 +375,18 @@ def search_markup2(
             InlineKeyboardButton(
                 text="⪻", callback_data=f"chonga 2|{query}|{user_id}"
             ),
-            InlineKeyboardButton(text="✘", callback_data=f"ppcl2 smex|{user_id}"),
+            InlineKeyboardButton(
+                text="✘", callback_data=f"ppcl2 smex|{user_id}"
+            ),
             InlineKeyboardButton(
                 text="⪼", callback_data=f"chonga 2|{query}|{user_id}"
             ),
         ],
     ]
-    return buttons
 
 
 def gets(videoid, user_id):
-    buttons = [
+    return [
         [
             InlineKeyboardButton(
                 text="ᴀᴜᴅɪᴏ", callback_data=f"gets audio|{videoid}|{user_id}"
@@ -394,6 +395,5 @@ def gets(videoid, user_id):
                 text="ᴠɪᴅᴇᴏ", callback_data=f"gets video|{videoid}|{user_id}"
             ),
         ],
-        [InlineKeyboardButton(text="ᴛᴜᴛᴜᴘ", callback_data=f"close2")],
+        [InlineKeyboardButton(text="ᴛᴜᴛᴜᴘ", callback_data="close2")],
     ]
-    return buttons

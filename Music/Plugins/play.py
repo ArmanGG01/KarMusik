@@ -159,7 +159,7 @@ async def music_onoff(_, message: Message):
     message.chat.id
     if status in ("ON", "on", "On"):
         lel = await message.reply("`processing...`")
-        if not message.chat.id in DISABLED_GROUPS:
+        if message.chat.id not in DISABLED_GROUPS:
             await lel.edit("» **Music Aktif.**")
             return
         DISABLED_GROUPS.remove(message.chat.id)
@@ -198,7 +198,6 @@ Kembalikan kembali ke Akun Pengguna Dari Hak Admin.
         return await message.reply_text(
             f"😕 **Maap {message.from_user.mention}, Musicnya Dimatiin Sama Admin**" 
         )
-        return
     user_id = message.from_user.id
     chat_title = message.chat.title
     username = message.from_user.first_name
@@ -207,10 +206,10 @@ Kembalikan kembali ke Akun Pengguna Dari Hak Admin.
         LOG_ID = "-1001302879778"
         if int(chat_id) != int(LOG_ID):
             return await message.reply_text(
-                f"Bot sedang dalam proses peng Updatean. Maaf untuk ketidaknyamanannya!"
+                "Bot sedang dalam proses peng Updatean. Maaf untuk ketidaknyamanannya!"
             )
         return await message.reply_text(
-            f"Bot sedang dalam Pemeliharaan. Maaf untuk ketidaknyamanannya!"
+            "Bot sedang dalam Pemeliharaan. Maaf untuk ketidaknyamanannya!"
         )
     a = await app.get_chat_member(message.chat.id, BOT_ID)
     if a.status != "administrator":
@@ -384,9 +383,7 @@ Saya perlu menjadi admin dengan beberapa izin:
                 speed = d["_speed_str"]
                 size = d["_total_bytes_str"]
                 bytesx = d["total_bytes"]
-                if str(bytesx) in flex:
-                    pass
-                else:
+                if str(bytesx) not in flex:
                     flex[str(bytesx)] = 1
                 if flex[str(bytesx)] == 1:
                     flex[str(bytesx)] += 1
@@ -495,24 +492,19 @@ Saya perlu menjadi admin dengan beberapa izin:
         _chat_ = (str(file)).replace("_", "", 1).replace("/", "", 1).replace(".", "", 1)
         cpl = f"downloads/{_chat_}final.png"
         shutil.copyfile(thumb, cpl)
-        f20 = open(f"search/{_chat_}title.txt", "w")
-        f20.write(f"{title}")
-        f20.close()
-        f111 = open(f"search/{_chat_}duration.txt", "w")
-        f111.write(f"{duration}")
-        f111.close()
-        f27 = open(f"search/{_chat_}username.txt", "w")
-        f27.write(f"{checking}")
-        f27.close()
+        with open(f"search/{_chat_}title.txt", "w") as f20:
+            f20.write(f"{title}")
+        with open(f"search/{_chat_}duration.txt", "w") as f111:
+            f111.write(f"{duration}")
+        with open(f"search/{_chat_}username.txt", "w") as f27:
+            f27.write(f"{checking}")
         if fucksemx != 1:
-            f28 = open(f"search/{_chat_}videoid.txt", "w")
-            f28.write(f"{videoid}")
-            f28.close()
+            with open(f"search/{_chat_}videoid.txt", "w") as f28:
+                f28.write(f"{videoid}")
             buttons = play_markup(videoid, user_id)
         else:
-            f28 = open(f"search/{_chat_}videoid.txt", "w")
-            f28.write(f"{videoid}")
-            f28.close()
+            with open(f"search/{_chat_}videoid.txt", "w") as f28:
+                f28.write(f"{videoid}")
             buttons = audio_markup(videoid, user_id)
         checking = (
             f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
@@ -548,14 +540,12 @@ Saya perlu menjadi admin dengan beberapa izin:
             f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
         )
         if fucksemx != 1:
-            f28 = open(f"search/{_chat_}videoid.txt", "w")
-            f28.write(f"{videoid}")
-            f28.close()
+            with open(f"search/{_chat_}videoid.txt", "w") as f28:
+                f28.write(f"{videoid}")
             buttons = play_markup(videoid, user_id)
         else:
-            f28 = open(f"search/{_chat_}videoid.txt", "w")
-            f28.write(f"{videoid}")
-            f28.close()
+            with open(f"search/{_chat_}videoid.txt", "w") as f28:
+                f28.write(f"{videoid}")
             buttons = audio_markup(videoid, user_id)
         await message.reply_photo(
             photo=thumb,
@@ -584,7 +574,7 @@ async def startyuplay(_, CallbackQuery):
         )
     if duration == "None":
         return await CallbackQuery.message.reply_text(
-            f"Sorry!, Live Videos are not supported"
+            "Sorry!, Live Videos are not supported"
         )
     if CallbackQuery.from_user.id != int(user_id):
         return await CallbackQuery.answer(
@@ -627,9 +617,7 @@ async def startyuplay(_, CallbackQuery):
             speed = d["_speed_str"]
             size = d["_total_bytes_str"]
             bytesx = d["total_bytes"]
-            if str(bytesx) in flex:
-                pass
-            else:
+            if str(bytesx) not in flex:
                 flex[str(bytesx)] = 1
             if flex[str(bytesx)] == 1:
                 flex[str(bytesx)] += 1
@@ -695,18 +683,14 @@ async def startyuplay(_, CallbackQuery):
         _chat_ = (str(file)).replace("_", "", 1).replace("/", "", 1).replace(".", "", 1)
         cpl = f"downloads/{_chat_}final.png"
         shutil.copyfile(thumb, cpl)
-        f20 = open(f"search/{_chat_}title.txt", "w")
-        f20.write(f"{title}")
-        f20.close()
-        f111 = open(f"search/{_chat_}duration.txt", "w")
-        f111.write(f"{duration}")
-        f111.close()
-        f27 = open(f"search/{_chat_}username.txt", "w")
-        f27.write(f"{checking}")
-        f27.close()
-        f28 = open(f"search/{_chat_}videoid.txt", "w")
-        f28.write(f"{videoid}")
-        f28.close()
+        with open(f"search/{_chat_}title.txt", "w") as f20:
+            f20.write(f"{title}")
+        with open(f"search/{_chat_}duration.txt", "w") as f111:
+            f111.write(f"{duration}")
+        with open(f"search/{_chat_}username.txt", "w") as f27:
+            f27.write(f"{checking}")
+        with open(f"search/{_chat_}videoid.txt", "w") as f28:
+            f28.write(f"{videoid}")
         await mystic.delete()
         m = await CallbackQuery.message.reply_photo(
             photo=thumb,

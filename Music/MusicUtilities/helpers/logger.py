@@ -9,7 +9,7 @@ async def LOG_CHAT(message, what):
         chatusername = ("Private Group")
     user_id = message.from_user.id
     user_name = message.from_user.first_name
-    mention = "["+user_name+"](tg://user?id="+str(user_id)+")" 
+    mention = f"[{user_name}](tg://user?id={str(user_id)})"
     logger_text = f"""
 __**New {what}**__
 

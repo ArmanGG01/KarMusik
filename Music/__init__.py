@@ -147,7 +147,7 @@ def all_info(app, client):
     BOT_ID = getme.id
     ASSID = getme1.id
     if getme.last_name:
-        BOT_NAME = getme.first_name + " " + getme.last_name
+        BOT_NAME = f"{getme.first_name} {getme.last_name}"
     else:
         BOT_NAME = getme.first_name
     BOT_USERNAME = getme.username

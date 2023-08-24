@@ -108,13 +108,9 @@ async def skip(client, m: Message):
             items = [int(x) for x in skip.split(" ") if x.isdigit()]
             items.sort(reverse=True)
             for x in items:
-                if x == 0:
-                    pass
-                else:
+                if x != 0:
                     hm = await skip_item(chat_id, x)
-                    if hm == 0:
-                        pass
-                    else:
+                    if hm != 0:
                         OP = OP + "\n" + f"**#{x}** - {hm}"
             await m.reply(OP)
 
@@ -325,9 +321,9 @@ async def cbunmute(_, query: CallbackQuery):
 @app.on_message(command(["volume", "vol"]))
 @authorized_users_only
 async def change_volume(client, m: Message):
-    range = m.command[1]
     chat_id = m.chat.id
     if chat_id in QUEUE:
+        range = m.command[1]
         try:
             await call_py.change_volume_call(chat_id, volume=int(range))
             await m.reply(f"✅ **Volume disetel ke** `{range}`%")
